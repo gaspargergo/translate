@@ -7,7 +7,7 @@
   <title>Magyar - Ősmagyar fordító</title>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.5">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href='https://fonts.googleapis.com/css?family=Product+Sans:400,400i,700,700i' rel='stylesheet' type='text/css'>
 
   <style>
@@ -136,12 +136,12 @@
 
 <script>
 
-	
 	document.getElementById("translateButton").onclick = function(){translate();};
 	document.getElementById("translateAndPlayButton").onclick = function(){
 		translate();		
 		responsiveVoice.speak(document.getElementById("osmagyar").value , "Hungarian Female");
 	}
+
 	document.getElementById("swapButton").onclick = function(){
 		var topBars = document.getElementsByClassName("topbar");
 		var temp = topBars[0].textContent;
@@ -171,7 +171,8 @@
 	function translateWord(text){
 
 		var translated = "";
-		var extra = '';
+		var extra = "";
+		var flag = false;
 
 		for(var i = text.length-1; i >= 0; i--){
 
@@ -238,8 +239,10 @@
 				case '-':
 				case '!':
 				case '?':
-					extra = text[i];
+					extra += text[i];
 					break;
+				case '\n':
+					flag = true;
 
 				default:
 					translated += text[i];
@@ -249,7 +252,12 @@
 		}
 
 		translated += extra;
-		return translated;
+		if(!flag){
+			return translated;
+		}
+		else{
+			return translated.split('\n').reverse().join('\n');
+		}
 	};
 
 	var colorArray = ["#4285f4","#ea4335","#fbbc05","#34a853"];
