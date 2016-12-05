@@ -1,0 +1,234 @@
+<!doctype HTML>
+
+<html>
+
+<head>
+
+  <title>Magyar - Ősmagyar fordító</title>
+
+  <meta charset="UTF-8">
+  <link href='https://fonts.googleapis.com/css?family=Product+Sans:400,400i,700,700i' rel='stylesheet' type='text/css'>
+
+  <style>
+  	textarea{
+  		height: 150px;
+  		width: 606px;
+  		font-size:20px;
+  		resize: none;
+  		margin-left: 30px;
+  		font-family: Arial;
+   	}
+
+  	body{
+  		margin: 0;
+  	}
+
+  	header{
+  		height: 60px;
+  		width: 100%;
+  		background-color: #f1f1f1;
+  		font-family: 'Product Sans';
+  		font-size: 23px;
+  		vertical-align: center;
+  		font-weight:bold;
+  		line-height: 60px;
+  	}
+
+  	#wrapper{
+  		font-family: Arial;
+  	}
+
+  	#topbar{
+  		height: 60px;
+  		width: 100%;
+  		font-size: 18px;
+  		font-weight: bold;
+  		vertical-align: center;
+  		line-height: 60px;
+  		margin-left: 30px;
+  		word-spacing: 580px;
+  		margin-bottom: -5px;
+  	}
+
+  	.button{
+  		height: 30px;
+  		width: 80px;
+  		border-radius: 2px;
+  		background-color: #4d90fe;
+  		color: white;
+  		line-height: 30px;
+  		text-align: center;
+  		vertical-align: center;
+  		font-weight: bold;
+  		font-size: 14px;
+  		
+  		float: left;
+  		margin-right: 10px;
+  	}
+
+  	#mic{
+  		width: 30px;
+  	}
+
+  	#mic img{
+  		padding: 3px;
+  	}
+
+  	#button-holder{
+  		margin-left: 1170px;
+  	}
+
+
+  </style>
+
+  
+</head>
+
+<body>
+
+	<header>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>M</span><span>a</span><span>g</span><span>y</span><span>a</span><span>r</span>&nbsp; <span>-</span>&nbsp; <span>Ő</span><span>s</span><span>m</span><span>a</span><span>g</span><span>y</span><span>a</span><span>r</span>&nbsp;<span>f</span><span>o</span><span>r</span><span>d</span><span>í</span><span>t</span><span>ó</span>
+	</header>
+
+<div id="wrapper">
+	<div id="topbar">Magyar Ősmagyar</div>
+	<form align="left" method="post">
+	  
+	  <textarea rows="4" cols="50" id="magyar" autofocus></textarea>
+	  
+	  <textarea rows="4" cols="50" id="osmagyar" readonly></textarea>
+	  <br><br>
+	  <div id="button-holder">
+	  <a id="translateButton"><div class="button">Fordít</div></a>
+	  <a id="translateAndPlayButton"><div class="button" id="mic"><img src="MIC.png" alt="mikrofon" height="23px" width="23px"></div></a>
+	</div>
+	</form> 
+</div>
+
+
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+
+<script>
+
+	function translate() {
+		var allText = document.getElementById("magyar").value;
+		var words = allText.toLowerCase().split(' ');
+
+		for(var i = 0; i < words.length;i++){
+			words[i] = translateWord(words[i]);
+		}
+
+
+		document.getElementById("osmagyar").value = words.join(' ');
+	}
+
+	document.getElementById("translateButton").onclick = function(){translate();};
+	document.getElementById("translateAndPlayButton").onclick = function(){translate();		responsiveVoice.speak(document.getElementById("osmagyar").value , "Hungarian Female");}
+
+	function translateWord(text){
+
+		var translated = "";
+		var extra = '';
+
+		for(var i = text.length-1; i >= 0; i--){
+
+			switch(text[i]){
+
+				case 'y':
+					switch(text[i-1]){
+						case 'g':
+						case 'l':
+						case 'n':
+						case 't':
+							translated += text[i-1];
+							translated += text[i];
+							i -= 1;
+							break;
+						default:
+							translated += text[i];
+							break;
+
+					}
+					break;
+
+				case 's':
+					switch(text[i-1]){
+						case 'c':
+						case 'z':
+							if(text[i-2] === 'd'){
+								translated += text[i-2];
+								translated += text[i-1];
+								translated += text[i];
+								i -= 2;
+							}
+							else{
+								translated += text[i-1];
+								translated += text[i];
+								i -= 1;
+							}
+							break;
+						default:
+							translated += text[i];
+							break;
+
+					}
+					break;
+
+				case 'z':
+					switch(text[i-1]){
+						case 's':
+							translated += text[i-1];
+							translated += text[i];
+							i -= 1;
+							break;
+						default:
+							translated += text[i];
+							break;
+
+					}
+					break;
+
+				case ',':
+				case ';':
+				case ':':
+				case '.':
+				case '-':
+				case '!':
+				case '?':
+					extra = text[i];
+					break;
+
+				default:
+					translated += text[i];
+					break;
+
+			}
+		}
+
+		translated += extra;
+		return translated;
+	};
+
+	var colorArray = ["#4285f4","#ea4335","#fbbc05","#34a853"];
+
+	function randomLiColor () {
+	  var listItems = document.getElementsByTagName("span");
+
+	  for(var i = 0; i < listItems.length; i++) {
+	    var randomNum = Math.floor(Math.random() * colorArray.length);
+	    var randomColor = colorArray[randomNum];
+
+	    listItems[i].style.color = randomColor;
+	  }
+	}
+
+	randomLiColor();
+
+
+</script>
+
+
+
+</body>
+
+</html>
