@@ -12,10 +12,9 @@
   <style>
   	textarea{
   		height: 150px;
-  		width: 606px;
+  		width: 100%;
   		font-size:20px;
   		resize: none;
-  		margin-left: 30px;
   		font-family: Arial;
    	}
 
@@ -36,17 +35,24 @@
 
   	#wrapper{
   		font-family: Arial;
+  		width: 80%;
+  		max-width: 1272px;
   	}
 
-  	#topbar{
+  	.container{
+  		width: 48%;
+  		margin-left: 2%;
+  		max-width: 606px;
+  		float: left;
+  	}
+
+  	.topbar{
   		height: 60px;
   		width: 100%;
   		font-size: 18px;
   		font-weight: bold;
   		vertical-align: center;
   		line-height: 60px;
-  		margin-left: 30px;
-  		word-spacing: 580px;
   		margin-bottom: -5px;
   	}
 
@@ -62,8 +68,8 @@
   		font-weight: bold;
   		font-size: 14px;
   		
-  		float: left;
-  		margin-right: 10px;
+  		float: right;
+  		margin-left: 10px;
   	}
 
   	#mic{
@@ -73,11 +79,6 @@
   	#mic img{
   		padding: 3px;
   	}
-
-  	#button-holder{
-  		margin-left: 1170px;
-  	}
-
 
   </style>
 
@@ -91,19 +92,24 @@
 	</header>
 
 <div id="wrapper">
-	<div id="topbar">Magyar Ősmagyar</div>
 	<form align="left" method="post">
-	  
+	 
+	<div class="container"> 
+	  <div class="topbar">Mai Magyar</div>
 	  <textarea rows="4" cols="50" id="magyar" autofocus></textarea>
+	</div>
 	  
+	<div class="container"> 
+	  <div class="topbar">Ősmagyar</div>
 	  <textarea rows="4" cols="50" id="osmagyar" readonly></textarea>
+	</div>
+
 	  <br><br>
-	  <div id="button-holder">
 	  <a id="translateButton"><div class="button">Fordít</div></a>
 	  <a id="translateAndPlayButton"><div class="button" id="mic"><img src="MIC.png" alt="mikrofon" height="23px" width="23px"></div></a>
-	</div>
 	</form> 
 </div>
+
 
 
 <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
