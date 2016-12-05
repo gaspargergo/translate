@@ -7,17 +7,11 @@
   <title>Magyar - Ősmagyar fordító</title>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.2">
+  <meta name="viewport" content="width=device-width, initial-scale=1.5">
   <link href='https://fonts.googleapis.com/css?family=Product+Sans:400,400i,700,700i' rel='stylesheet' type='text/css'>
 
   <style>
-  	textarea{
-  		height: 150px;
-  		width: 100%;
-  		font-size:20px;
-  		resize: none;
-  		font-family: Arial;
-   	}
+  	
 
   	body{
   		margin: 0;
@@ -36,7 +30,7 @@
 
   	#wrapper{
   		font-family: Arial;
-  		width: 80%;
+  		width: 98%;
   		max-width: 1272px;
   	}
 
@@ -57,6 +51,25 @@
   		margin-bottom: -5px;
   	}
 
+  	textarea{
+  		height: 150px;
+  		width: 100%;
+  		font-size:20px;
+  		resize: none;
+  		font-family: Arial;
+  		padding: 10px;
+  		box-sizing: border-box;
+   	}
+
+   	#magyar{
+   		border: 2px solid #d9d9d9;
+   	}
+
+   	#osmagyar{
+   		border: none;
+   		background-color: #f5f5f5;
+   	}
+
   	.button{
   		height: 30px;
   		width: 80px;
@@ -71,14 +84,20 @@
   		
   		float: right;
   		margin-left: 10px;
+  		margin-top: 10px;
   	}
 
-  	#mic{
-  		width: 30px;
+  	.squareButton{
+  		width: 40px;
   	}
 
-  	#mic img{
+  	.squareButton img{
   		padding: 3px;
+  	}
+
+  	#swap{
+  		background-color: #f5f5f5;
+  		border: 1px solid #dcdcdc;
   	}
 
   </style>
@@ -105,9 +124,9 @@
 	  <textarea rows="4" cols="50" id="osmagyar" readonly></textarea>
 	</div>
 
-	  <br><br>
 	  <a id="translateButton"><div class="button">Fordít</div></a>
-	  <a id="translateAndPlayButton"><div class="button" id="mic"><img src="MIC.png" alt="mikrofon" height="23px" width="23px"></div></a>
+	  <a id="translateAndPlayButton"><div class="button squareButton" ><img src="MIC.png" alt="mikrofon" height="23px" width="23px"></div></a>
+	  <a id="swapButton"><div class="button squareButton" id="swap"><img src="swap.png" alt="csere" height="23px" width="23px"></div></a>
 	</form> 
 </div>
 
@@ -116,6 +135,26 @@
 <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 
 <script>
+
+	
+	document.getElementById("translateButton").onclick = function(){translate();};
+	document.getElementById("translateAndPlayButton").onclick = function(){
+		translate();		
+		responsiveVoice.speak(document.getElementById("osmagyar").value , "Hungarian Female");
+	}
+	document.getElementById("swapButton").onclick = function(){
+		var topBars = document.getElementsByClassName("topbar");
+		var temp = topBars[0].textContent;
+
+		topBars[0].textContent = topBars[1].textContent;
+		topBars[1].textContent = temp;
+
+		var textareas = document.getElementsByTagName("textarea");
+		var temp2 = textareas[0].value;
+
+		textareas[0].value = textareas[1].value;
+		textareas[1].value = temp2;
+	}
 
 	function translate() {
 		var allText = document.getElementById("magyar").value;
@@ -128,9 +167,6 @@
 
 		document.getElementById("osmagyar").value = words.join(' ');
 	}
-
-	document.getElementById("translateButton").onclick = function(){translate();};
-	document.getElementById("translateAndPlayButton").onclick = function(){translate();		responsiveVoice.speak(document.getElementById("osmagyar").value , "Hungarian Female");}
 
 	function translateWord(text){
 
