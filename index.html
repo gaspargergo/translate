@@ -18,14 +18,21 @@
   	}
 
   	header{
-  		height: 60px;
+  		min-height: 60px;
   		width: 100%;
   		background-color: #f1f1f1;
+  		overflow: hidden;
+  	}
+
+  	#headerText{
+  		width: 25%;
   		font-family: 'Product Sans';
   		font-size: 23px;
   		vertical-align: center;
   		font-weight:bold;
   		line-height: 60px;
+  		float: left;
+  		margin-left: 2%;
   	}
 
   	#wrapper{
@@ -87,12 +94,20 @@
   		margin-top: 10px;
   	}
 
+  	.button:hover{
+  		cursor: pointer;
+  	}
+
   	.squareButton{
   		width: 40px;
   	}
 
   	.squareButton img{
   		padding: 3px;
+  	}
+
+  	#mic{
+  		opacity: 0.6;
   	}
 
   	#swap{
@@ -108,7 +123,8 @@
 <body>
 
 	<header>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>M</span><span>a</span><span>g</span><span>y</span><span>a</span><span>r</span>&nbsp; <span>-</span>&nbsp; <span>Ő</span><span>s</span><span>m</span><span>a</span><span>g</span><span>y</span><span>a</span><span>r</span>&nbsp;<span>f</span><span>o</span><span>r</span><span>d</span><span>í</span><span>t</span><span>ó</span>
+		<div id="headerText"><span>M</span><span>a</span><span>g</span><span>y</span><span>a</span><span>r</span>&nbsp; <span>-</span>&nbsp; <span>Ő</span><span>s</span><span>m</span><span>a</span><span>g</span><span>y</span><span>a</span><span>r</span>&nbsp;<span>f</span><span>o</span><span>r</span><span>d</span><span>í</span><span>t</span><span>ó</span></div>
+		<img src="pattern.gif" height="60px">
 	</header>
 
 <div id="wrapper">
@@ -125,7 +141,7 @@
 	</div>
 
 	  <a id="translateButton"><div class="button">Fordít</div></a>
-	  <a id="translateAndPlayButton"><div class="button squareButton" ><img src="MIC.png" alt="mikrofon" height="23px" width="23px"></div></a>
+	  <a id="translateAndPlayButton"><div class="button squareButton" id="mic"><img src="MIC.png" alt="mikrofon" height="23px" width="23px"></div></a>
 	  <a id="swapButton"><div class="button squareButton" id="swap"><img src="swap.png" alt="csere" height="23px" width="23px"></div></a>
 	</form> 
 </div>
@@ -136,9 +152,11 @@
 
 <script>
 
-	document.getElementById("translateButton").onclick = function(){translate();};
-	document.getElementById("translateAndPlayButton").onclick = function(){
-		translate();		
+	document.getElementById("translateButton").onclick = function(){
+		translate();
+		document.getElementById("mic").style.opacity = "1";
+	}
+	document.getElementById("translateAndPlayButton").onclick = function(){	
 		responsiveVoice.speak(document.getElementById("osmagyar").value , "Hungarian Female");
 	}
 
